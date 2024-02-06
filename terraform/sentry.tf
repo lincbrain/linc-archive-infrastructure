@@ -1,10 +1,10 @@
 data "sentry_organization" "this" {
-  slug = "dandiarchive"
+  slug = "lincbrain"
 }
 
 data "sentry_team" "this" {
   organization = data.sentry_organization.this.id
-  slug         = "dandidevs"
+  slug         = "linc-brain-devs"
 }
 
 data "sentry_project" "this" {

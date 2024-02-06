@@ -1,41 +1,62 @@
-resource "aws_route53_zone" "dandi" {
-  name = "dandiarchive.org"
-}
-
-resource "aws_route53_record" "acm_validation" {
-  zone_id = aws_route53_zone.dandi.zone_id
-  name    = "_cbe41dfe1888c2bb5c157cacc35e1722"
-  type    = "CNAME"
-  ttl     = "300"
-  records = ["_46df7ee9a9c17698aedbb737f220c63a.mzlfeqexyx.acm-validations.aws"]
+resource "aws_route53_zone" "linc-brain-mit" {
+  name = "lincbrain.org"
 }
 
 resource "aws_route53_record" "gui" {
-  zone_id = aws_route53_zone.dandi.zone_id
+  zone_id = aws_route53_zone.linc-brain-mit.zone_id
   name    = "" # apex
   type    = "A"
   ttl     = "300"
-  records = ["75.2.60.5"] # Netlify's load balancer, which will proxy to our app
+  records = ["75.2.60.5"] # Netlify's load balancer,  which will proxy to our app -- https://docs.netlify.com/domains-https/custom-domains/configure-external-dns/#configure-an-apex-domain
 }
 
 resource "aws_route53_record" "gui-staging" {
-  zone_id = aws_route53_zone.dandi.zone_id
+  zone_id = aws_route53_zone.linc-brain-mit.zone_id
   name    = "gui-staging"
   type    = "CNAME"
   ttl     = "300"
-  records = ["gui-staging-dandiarchive-org.netlify.com"]
+  records = ["staging--gui-staging-lincbrain-org.netlify.app"]
 }
 
-resource "aws_route53_record" "www" {
-  zone_id = aws_route53_zone.dandi.zone_id
-  name    = "www"
-  type    = "CNAME"
+resource "aws_acm_certificate" "cert" {
+  domain_name        = "lincbrain.org"
+  validation_method  = "DNS"
+
+  subject_alternative_names = [
+    "*.lincbrain.org",
+    "*--gui-staging-lincbrain-org.netlify.app"
+  ]
+}
+
+
+resource "aws_route53_record" "validation" {
+  for_each = {
+    for domain_validation_option in aws_acm_certificate.cert.domain_validation_options : domain_validation_option.domain_name => {
+      name   = domain_validation_option.resource_record_name
+      record = domain_validation_option.resource_record_value
+      type   = domain_validation_option.resource_record_type
+    }
+  }
+
+  zone_id = aws_route53_zone.linc-brain-mit.zone_id
+  name    = each.value.name
+  type    = each.value.type
+  records = [each.value.record]
   ttl     = "300"
-  records = ["dandi.github.io"]
+
+  lifecycle {
+    create_before_destroy = true
+    ignore_changes = [records, name, type]
+  }
+}
+
+resource "aws_acm_certificate_validation" "cert" {
+  certificate_arn         = aws_acm_certificate.cert.arn
+  validation_record_fqdns = [for record in aws_route53_record.validation : record.fqdn]
 }
 
 resource "aws_route53_record" "email" {
-  zone_id = aws_route53_zone.dandi.zone_id
+  zone_id = aws_route53_zone.linc-brain-mit.zone_id
   name    = "" # apex
   type    = "MX"
   ttl     = "300"
@@ -46,7 +67,7 @@ resource "aws_route53_record" "email" {
 }
 
 resource "aws_route53_record" "email-spf" {
-  zone_id = aws_route53_zone.dandi.zone_id
+  zone_id = aws_route53_zone.linc-brain-mit.zone_id
   name    = "" # apex
   type    = "TXT"
   ttl     = "300"

@@ -1,37 +1,39 @@
 terraform {
   backend "remote" {
-    organization = "dandi"
+    organization = "linc-brain-mit"
 
     workspaces {
-      name = "dandi-prod"
+      name = "linc-archive-terraform"
     }
   }
 }
 
-// This is the "project" account, the primary account with most resources
 provider "aws" {
-  region              = "us-east-2"
-  allowed_account_ids = ["278212569472"]
-  # Must set AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY envvars
+  region              = "us-east-1"
+  allowed_account_ids = ["151312473579"]
+
+  assume_role {
+      role_arn = "arn:aws:iam::151312473579:role/linc-infrastructure"
+   }
 }
 
 // The "sponsored" account, the Amazon-sponsored account with the public bucket
 provider "aws" {
   alias               = "sponsored"
-  region              = "us-east-2"
-  allowed_account_ids = ["769362853226"]
+  region              = "us-east-1"
+  allowed_account_ids = ["151312473579"]  # TODO: Aaron make new ID
 
   // This will authenticate using credentials from the project account, then assume the
-  // "dandi-infrastructure" role from the sponsored account to manage resources there
+  // "linc-infrastructure" role from the sponsored account to manage resources there
   assume_role {
-    role_arn = "arn:aws:iam::769362853226:role/dandi-infrastructure"
+    role_arn = "arn:aws:iam::151312473579:role/linc-infrastructure"
   }
 
   # Must set AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY envvars for project account
 }
 
 provider "heroku" {
-  # Must set HEROKU_EMAIL, HEROKU_API_KEY envvars
+
 }
 
 provider "sentry" {

@@ -1,5 +1,5 @@
 output "bucket_name" {
-  value       = aws_s3_bucket.dandiset_bucket.id
+  value       = aws_s3_bucket.lincset_bucket.id
   description = "The S3 bucket name."
 }
 
@@ -9,6 +9,6 @@ output "log_bucket_name" {
 }
 
 output "bucket_arn" {
-  value       = aws_s3_bucket.dandiset_bucket.arn
+  value       = aws_s3_bucket.lincset_bucket.arn
   description = "The S3 bucket ARN."
 }

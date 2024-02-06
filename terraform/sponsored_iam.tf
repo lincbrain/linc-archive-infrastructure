@@ -37,8 +37,8 @@ data "aws_iam_policy_document" "sponsored_writers" {
       "s3:GetObjectVersion",
     ]
     resources = [
-      "${module.sponsored_dandiset_bucket.bucket_arn}/*",
-      module.sponsored_dandiset_bucket.bucket_arn,
+      "${module.sponsored_lincset_bucket.bucket_arn}/*",
+      module.sponsored_lincset_bucket.bucket_arn,
     ]
   }
 }
