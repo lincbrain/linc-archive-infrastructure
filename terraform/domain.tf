@@ -10,21 +10,20 @@ resource "aws_route53_record" "gui" {
   records = ["75.2.60.5"] # Netlify's load balancer,  which will proxy to our app -- https://docs.netlify.com/domains-https/custom-domains/configure-external-dns/#configure-an-apex-domain
 }
 
-resource "aws_route53_record" "gui-staging" {
-  zone_id = aws_route53_zone.linc-brain-mit.zone_id
-  name    = "gui-staging"
-  type    = "CNAME"
-  ttl     = "300"
-  records = ["staging--gui-staging-lincbrain-org.netlify.app"]
-}
+# resource "aws_route53_record" "gui-staging" {
+#   zone_id = aws_route53_zone.linc-brain-mit.zone_id
+#   name    = "gui-staging"
+#   type    = "CNAME"
+#   ttl     = "300"
+#   records = ["staging--gui-staging-lincbrain-org.netlify.app"]
+# }
 
 resource "aws_acm_certificate" "cert" {
   domain_name        = "lincbrain.org"
   validation_method  = "DNS"
 
   subject_alternative_names = [
-    "*.lincbrain.org",
-    "*--gui-staging-lincbrain-org.netlify.app"
+    "*.lincbrain.org"
   ]
 }
 
