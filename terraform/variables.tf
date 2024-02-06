@@ -1,9 +1,11 @@
 variable "doi_api_password" {
   type        = string
   description = "The password for the Datacite API, used to mint new DOIs during publish."
+  default     = "yourdefaultpassword"
 }
 
 variable "test_doi_api_password" {
   type        = string
   description = "The password for the Datacite Test API, used to mint new DOIs on staging during publish."
+  default     = "yourtestdefaultpassword"
 }

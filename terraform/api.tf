@@ -6,7 +6,7 @@ module "api" {
   source  = "girder/girder4/heroku"
   version = "0.13.0"
 
-  project_slug     = "linc-staging-terraform"
+  project_slug     = "linc-brain-prod"
   heroku_team_name = data.heroku_team.linc-brain-mit.name
   route53_zone_id  = aws_route53_zone.linc-brain-mit.zone_id
   subdomain_name   = "api"
