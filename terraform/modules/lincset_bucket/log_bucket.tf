@@ -18,7 +18,7 @@ resource "aws_s3_bucket_server_side_encryption_configuration" "log_bucket" {
   }
 }
 
-data "aws_iam_policy_document" "dandiset_log_bucket_policy" {
+data "aws_iam_policy_document" "lincset_log_bucket_policy" {
   statement {
     resources = [
       "${aws_s3_bucket.log_bucket.arn}",
@@ -52,7 +52,7 @@ data "aws_iam_policy_document" "dandiset_log_bucket_policy" {
     condition {
       test     = "ArnLike"
       variable = "aws:SourceArn"
-      values   = [aws_s3_bucket.dandiset_bucket.arn]
+      values   = [aws_s3_bucket.lincset_bucket.arn]
     }
 
     principals {
@@ -62,14 +62,14 @@ data "aws_iam_policy_document" "dandiset_log_bucket_policy" {
   }
 }
 
-resource "aws_s3_bucket_policy" "dandiset_log_bucket_policy" {
+resource "aws_s3_bucket_policy" "lincset_log_bucket_policy" {
   provider = aws
 
   bucket = aws_s3_bucket.log_bucket.id
-  policy = data.aws_iam_policy_document.dandiset_log_bucket_policy.json
+  policy = data.aws_iam_policy_document.lincset_log_bucket_policy.json
 }
 
-data "aws_iam_policy_document" "dandiset_log_bucket_owner" {
+data "aws_iam_policy_document" "lincset_log_bucket_owner" {
   version = "2008-10-17"
 
   // TODO: gate behind a "cross account" flag, since this is technically only
@@ -87,12 +87,12 @@ data "aws_iam_policy_document" "dandiset_log_bucket_owner" {
   }
 }
 
-resource "aws_iam_user_policy" "dandiset_log_bucket_owner" {
+resource "aws_iam_user_policy" "lincset_log_bucket_owner" {
   // The Heroku IAM user will always be in the project account
   provider = aws.project
 
   name = "${var.log_bucket_name}-ownership-policy"
   user = var.heroku_user.user_name
 
-  policy = data.aws_iam_policy_document.dandiset_log_bucket_owner.json
+  policy = data.aws_iam_policy_document.lincset_log_bucket_owner.json
 }

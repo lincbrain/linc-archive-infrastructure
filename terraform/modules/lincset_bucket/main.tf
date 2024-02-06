@@ -4,7 +4,7 @@ data "aws_caller_identity" "sponsored_account" {
 
 data "aws_caller_identity" "current" {}
 
-resource "aws_s3_bucket" "dandiset_bucket" {
+resource "aws_s3_bucket" "lincset_bucket" {
 
   bucket = var.bucket_name
 
@@ -13,8 +13,8 @@ resource "aws_s3_bucket" "dandiset_bucket" {
   }
 }
 
-resource "aws_s3_bucket_server_side_encryption_configuration" "dandiset_bucket" {
-  bucket = aws_s3_bucket.dandiset_bucket.id
+resource "aws_s3_bucket_server_side_encryption_configuration" "lincset_bucket" {
+  bucket = aws_s3_bucket.lincset_bucket.id
 
   rule {
     apply_server_side_encryption_by_default {
@@ -23,8 +23,8 @@ resource "aws_s3_bucket_server_side_encryption_configuration" "dandiset_bucket" 
   }
 }
 
-resource "aws_s3_bucket_cors_configuration" "dandiset_bucket" {
-  bucket = aws_s3_bucket.dandiset_bucket.id
+resource "aws_s3_bucket_cors_configuration" "lincset_bucket" {
+  bucket = aws_s3_bucket.lincset_bucket.id
 
   cors_rule {
     allowed_origins = [
@@ -46,57 +46,57 @@ resource "aws_s3_bucket_cors_configuration" "dandiset_bucket" {
   }
 }
 
-resource "aws_s3_bucket_logging" "dandiset_bucket" {
-  bucket = aws_s3_bucket.dandiset_bucket.id
+resource "aws_s3_bucket_logging" "lincset_bucket" {
+  bucket = aws_s3_bucket.lincset_bucket.id
 
   target_bucket = aws_s3_bucket.log_bucket.id
   target_prefix = ""
 }
 
-resource "aws_s3_bucket_versioning" "dandiset_bucket" {
+resource "aws_s3_bucket_versioning" "lincset_bucket" {
   count = var.versioning ? 1 : 0
 
-  bucket = aws_s3_bucket.dandiset_bucket.id
+  bucket = aws_s3_bucket.lincset_bucket.id
 
   versioning_configuration {
     status = "Enabled"
   }
 }
 
-resource "aws_s3_bucket_ownership_controls" "dandiset_bucket" {
-  bucket = aws_s3_bucket.dandiset_bucket.id
+resource "aws_s3_bucket_ownership_controls" "lincset_bucket" {
+  bucket = aws_s3_bucket.lincset_bucket.id
 
   rule {
     object_ownership = "BucketOwnerPreferred"
   }
 }
 
-resource "aws_s3_bucket_acl" "dandiset_bucket" {
-  depends_on = [aws_s3_bucket_ownership_controls.dandiset_bucket]
+resource "aws_s3_bucket_acl" "lincset_bucket" {
+  depends_on = [aws_s3_bucket_ownership_controls.lincset_bucket]
 
-  bucket = aws_s3_bucket.dandiset_bucket.id
+  bucket = aws_s3_bucket.lincset_bucket.id
 
   // Public access is granted via a bucket policy, not a canned ACL
   acl = "private"
 }
 
-resource "aws_iam_user_policy" "dandiset_bucket_owner" {
+resource "aws_iam_user_policy" "lincset_bucket_owner" {
   // The Heroku IAM user will always be in the project account
   provider = aws.project
 
   name = "${var.bucket_name}-ownership-policy"
   user = var.heroku_user.user_name
 
-  policy = data.aws_iam_policy_document.dandiset_bucket_owner.json
+  policy = data.aws_iam_policy_document.lincset_bucket_owner.json
 }
 
-data "aws_iam_policy_document" "dandiset_bucket_owner" {
+data "aws_iam_policy_document" "lincset_bucket_owner" {
   version = "2008-10-17"
 
   statement {
     resources = [
-      "${aws_s3_bucket.dandiset_bucket.arn}",
-      "${aws_s3_bucket.dandiset_bucket.arn}/*",
+      "${aws_s3_bucket.lincset_bucket.arn}",
+      "${aws_s3_bucket.lincset_bucket.arn}/*",
     ]
 
     actions = [
@@ -111,8 +111,8 @@ data "aws_iam_policy_document" "dandiset_bucket_owner" {
     content {
 
       resources = [
-        "${aws_s3_bucket.dandiset_bucket.arn}",
-        "${aws_s3_bucket.dandiset_bucket.arn}/*",
+        "${aws_s3_bucket.lincset_bucket.arn}",
+        "${aws_s3_bucket.lincset_bucket.arn}/*",
       ]
 
       actions = ["s3:PutObject"]
@@ -121,8 +121,8 @@ data "aws_iam_policy_document" "dandiset_bucket_owner" {
 
   statement {
     resources = [
-      "${aws_s3_bucket.dandiset_bucket.arn}",
-      "${aws_s3_bucket.dandiset_bucket.arn}/*",
+      "${aws_s3_bucket.lincset_bucket.arn}",
+      "${aws_s3_bucket.lincset_bucket.arn}/*",
     ]
 
     actions = ["s3:*"]
@@ -135,14 +135,14 @@ data "aws_iam_policy_document" "dandiset_bucket_owner" {
   }
 }
 
-resource "aws_s3_bucket_policy" "dandiset_bucket_policy" {
+resource "aws_s3_bucket_policy" "lincset_bucket_policy" {
   provider = aws
 
-  bucket = aws_s3_bucket.dandiset_bucket.id
-  policy = data.aws_iam_policy_document.dandiset_bucket_policy.json
+  bucket = aws_s3_bucket.lincset_bucket.id
+  policy = data.aws_iam_policy_document.lincset_bucket_policy.json
 }
 
-data "aws_iam_policy_document" "dandiset_bucket_policy" {
+data "aws_iam_policy_document" "lincset_bucket_policy" {
   version = "2008-10-17"
 
   dynamic "statement" {
@@ -150,8 +150,8 @@ data "aws_iam_policy_document" "dandiset_bucket_policy" {
 
     content {
       resources = [
-        "${aws_s3_bucket.dandiset_bucket.arn}",
-        "${aws_s3_bucket.dandiset_bucket.arn}/*",
+        "${aws_s3_bucket.lincset_bucket.arn}",
+        "${aws_s3_bucket.lincset_bucket.arn}/*",
       ]
 
       actions = [
@@ -179,7 +179,7 @@ data "aws_iam_policy_document" "dandiset_bucket_policy" {
         "s3:PutObject",
       ]
       resources = [
-        "${aws_s3_bucket.dandiset_bucket.arn}/*",
+        "${aws_s3_bucket.lincset_bucket.arn}/*",
       ]
       condition {
         test     = "StringEquals"
@@ -194,15 +194,15 @@ data "aws_iam_policy_document" "dandiset_bucket_policy" {
       condition {
         test     = "ArnLike"
         variable = "aws:SourceArn"
-        values   = [aws_s3_bucket.dandiset_bucket.arn]
+        values   = [aws_s3_bucket.lincset_bucket.arn]
       }
     }
   }
 
   statement {
     resources = [
-      "${aws_s3_bucket.dandiset_bucket.arn}",
-      "${aws_s3_bucket.dandiset_bucket.arn}/*",
+      "${aws_s3_bucket.lincset_bucket.arn}",
+      "${aws_s3_bucket.lincset_bucket.arn}/*",
     ]
 
     actions = [
@@ -219,8 +219,8 @@ data "aws_iam_policy_document" "dandiset_bucket_policy" {
 
   statement {
     resources = [
-      "${aws_s3_bucket.dandiset_bucket.arn}",
-      "${aws_s3_bucket.dandiset_bucket.arn}/*",
+      "${aws_s3_bucket.lincset_bucket.arn}",
+      "${aws_s3_bucket.lincset_bucket.arn}/*",
     ]
 
     actions = ["s3:*"]
@@ -244,7 +244,7 @@ data "aws_iam_policy_document" "dandiset_bucket_policy" {
       sid = "PreventDeletionOfObjectVersions"
 
       resources = [
-        "${aws_s3_bucket.dandiset_bucket.arn}/*"
+        "${aws_s3_bucket.lincset_bucket.arn}/*"
       ]
 
       actions = [
@@ -266,11 +266,11 @@ data "aws_iam_policy_document" "dandiset_bucket_policy" {
 # after 30 days.
 resource "aws_s3_bucket_lifecycle_configuration" "expire_deleted_objects" {
   # Must have bucket versioning enabled first
-  depends_on = [aws_s3_bucket_versioning.dandiset_bucket]
+  depends_on = [aws_s3_bucket_versioning.lincset_bucket]
 
   count = var.trailing_delete ? 1 : 0
 
-  bucket = aws_s3_bucket.dandiset_bucket.id
+  bucket = aws_s3_bucket.lincset_bucket.id
 
   # Based on https://docs.aws.amazon.com/AmazonS3/latest/userguide/lifecycle-configuration-examples.html#lifecycle-config-conceptual-ex7
   rule {

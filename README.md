@@ -1,2 +1,2 @@
-# dandi-infrastructure
-Deployment infrastructure for the DANDI Archive.
+# linc-archive-infrastructure
+Deployment infrastructure for the LINC Brain Archive.
