@@ -11,14 +11,14 @@ resource "aws_s3_bucket" "lincset_bucket" {
     prevent_destroy = true
   }
 
-  object_lock_configuration {
-    object_lock_enabled = "Enabled"
+}
 
-    rule {
-      default_retention {
-        mode = "GOVERNANCE"
-        # No days or years specified, implying indefinite retention
-      }
+resource "aws_s3_bucket_object_lock_configuration" "lincset_bucket" {
+  bucket = var.bucket_name
+
+  rule {
+    default_retention {
+      mode = "GOVERNANCE"
     }
   }
 }
