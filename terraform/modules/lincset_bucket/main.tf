@@ -7,21 +7,24 @@ data "aws_caller_identity" "current" {}
 resource "aws_s3_bucket" "lincset_bucket" {
   bucket = var.bucket_name
 
+  versioning {
+    enabled = true
+  }
+
+  object_lock_configuration {
+    object_lock_enabled = "Enabled"
+
+    rule {
+      default_retention {
+        mode = "GOVERNANCE"
+      }
+    }
+  }
+
   lifecycle {
     prevent_destroy = true
   }
 }
-
-resource "aws_s3_bucket_object_lock_configuration" "lincset_bucket" {
-  bucket = var.bucket_name
-
-  rule {
-    default_retention {
-      mode = "GOVERNANCE"
-    }
-  }
-}
-
 
 resource "aws_s3_bucket_server_side_encryption_configuration" "lincset_bucket" {
   bucket = aws_s3_bucket.lincset_bucket.id
