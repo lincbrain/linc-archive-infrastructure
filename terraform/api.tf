@@ -20,7 +20,7 @@ module "api" {
   heroku_web_dyno_quantity    = 1
   heroku_worker_dyno_quantity = 1
 
-    django_default_from_email          = "admin@api.lincbrain.org"
+    django_default_from_email          = "admin@lincbrain.org"
     django_cors_origin_whitelist       = ["https://lincbrain.org"]
     django_cors_origin_regex_whitelist = ["^https:\\/\\/[0-9a-z\\-]+\\.netlify\\.app$"]
 
