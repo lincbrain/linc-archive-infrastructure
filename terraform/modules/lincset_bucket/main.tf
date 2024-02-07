@@ -5,11 +5,21 @@ data "aws_caller_identity" "sponsored_account" {
 data "aws_caller_identity" "current" {}
 
 resource "aws_s3_bucket" "lincset_bucket" {
-
   bucket = var.bucket_name
 
   lifecycle {
     prevent_destroy = true
+  }
+
+  object_lock_configuration {
+    object_lock_enabled = "Enabled"
+
+    rule {
+      default_retention {
+        mode = "GOVERNANCE"
+        # No days or years specified, implying indefinite retention
+      }
+    }
   }
 }
 
