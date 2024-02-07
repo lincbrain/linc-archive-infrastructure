@@ -135,131 +135,131 @@ data "aws_iam_policy_document" "lincset_bucket_owner" {
   }
 }
 
-resource "aws_s3_bucket_policy" "lincset_bucket_policy" {
-  provider = aws
+# resource "aws_s3_bucket_policy" "lincset_bucket_policy" {
+#   provider = aws
+#
+#   bucket = aws_s3_bucket.lincset_bucket.id
+#   policy = data.aws_iam_policy_document.lincset_bucket_policy.json
+# }
 
-  bucket = aws_s3_bucket.lincset_bucket.id
-  policy = data.aws_iam_policy_document.lincset_bucket_policy.json
-}
-
-data "aws_iam_policy_document" "lincset_bucket_policy" {
-  version = "2008-10-17"
-
-  dynamic "statement" {
-    for_each = var.public ? [1] : []
-
-    content {
-      resources = [
-        "${aws_s3_bucket.lincset_bucket.arn}",
-        "${aws_s3_bucket.lincset_bucket.arn}/*",
-      ]
-
-      actions = [
-        "s3:Get*",
-        "s3:List*",
-      ]
-
-      principals {
-        identifiers = ["*"]
-        type        = "*"
-      }
-    }
-  }
-
-  dynamic "statement" {
-    for_each = var.allow_cross_account_heroku_put_object ? [1] : []
-
-    content {
-      sid = "S3PolicyStmt-DO-NOT-MODIFY-1569973164923"
-      principals {
-        identifiers = ["s3.amazonaws.com"]
-        type        = "Service"
-      }
-      actions = [
-        "s3:PutObject",
-      ]
-      resources = [
-        "${aws_s3_bucket.lincset_bucket.arn}/*",
-      ]
-      condition {
-        test     = "StringEquals"
-        variable = "aws:SourceAccount"
-        values   = [data.aws_caller_identity.sponsored_account.account_id]
-      }
-      condition {
-        test     = "StringEquals"
-        variable = "s3:x-amz-acl"
-        values   = ["bucket-owner-full-control"]
-      }
-      condition {
-        test     = "ArnLike"
-        variable = "aws:SourceArn"
-        values   = [aws_s3_bucket.lincset_bucket.arn]
-      }
-    }
-  }
-
-  statement {
-    resources = [
-      "${aws_s3_bucket.lincset_bucket.arn}",
-      "${aws_s3_bucket.lincset_bucket.arn}/*",
-    ]
-
-    actions = [
-      "s3:Get*",
-      "s3:List*",
-      "s3:Delete*",
-    ]
-
-    principals {
-      type        = "AWS"
-      identifiers = [var.heroku_user.arn]
-    }
-  }
-
-  statement {
-    resources = [
-      "${aws_s3_bucket.lincset_bucket.arn}",
-      "${aws_s3_bucket.lincset_bucket.arn}/*",
-    ]
-
-    actions = ["s3:*"]
-
-    condition {
-      test     = "StringEquals"
-      variable = "s3:x-amz-acl"
-      values   = ["bucket-owner-full-control"]
-    }
-
-    principals {
-      type        = "AWS"
-      identifiers = [var.heroku_user.arn]
-    }
-  }
-
-  dynamic "statement" {
-    for_each = var.trailing_delete ? [1] : []
-
-    content {
-      sid = "PreventDeletionOfObjectVersions"
-
-      resources = [
-        "${aws_s3_bucket.lincset_bucket.arn}/*"
-      ]
-
-      actions = [
-        "s3:DeleteObjectVersion",
-      ]
-
-      effect = "Deny"
-
-      principals {
-        identifiers = ["*"]
-        type        = "*"
-      }
-    }
-  }
-}
+# data "aws_iam_policy_document" "lincset_bucket_policy" {
+#   version = "2008-10-17"
+#
+#   dynamic "statement" {
+#     for_each = var.public ? [1] : []
+#
+#     content {
+#       resources = [
+#         "${aws_s3_bucket.lincset_bucket.arn}",
+#         "${aws_s3_bucket.lincset_bucket.arn}/*",
+#       ]
+#
+#       actions = [
+#         "s3:Get*",
+#         "s3:List*",
+#       ]
+#
+#       principals {
+#         identifiers = ["*"]
+#         type        = "*"
+#       }
+#     }
+#   }
+#
+#   dynamic "statement" {
+#     for_each = var.allow_cross_account_heroku_put_object ? [1] : []
+#
+#     content {
+#       sid = "S3PolicyStmt-DO-NOT-MODIFY-1569973164923"
+#       principals {
+#         identifiers = ["s3.amazonaws.com"]
+#         type        = "Service"
+#       }
+#       actions = [
+#         "s3:PutObject",
+#       ]
+#       resources = [
+#         "${aws_s3_bucket.lincset_bucket.arn}/*",
+#       ]
+#       condition {
+#         test     = "StringEquals"
+#         variable = "aws:SourceAccount"
+#         values   = [data.aws_caller_identity.sponsored_account.account_id]
+#       }
+#       condition {
+#         test     = "StringEquals"
+#         variable = "s3:x-amz-acl"
+#         values   = ["bucket-owner-full-control"]
+#       }
+#       condition {
+#         test     = "ArnLike"
+#         variable = "aws:SourceArn"
+#         values   = [aws_s3_bucket.lincset_bucket.arn]
+#       }
+#     }
+#   }
+#
+#   statement {
+#     resources = [
+#       "${aws_s3_bucket.lincset_bucket.arn}",
+#       "${aws_s3_bucket.lincset_bucket.arn}/*",
+#     ]
+#
+#     actions = [
+#       "s3:Get*",
+#       "s3:List*",
+#       "s3:Delete*",
+#     ]
+#
+#     principals {
+#       type        = "AWS"
+#       identifiers = [var.heroku_user.arn]
+#     }
+#   }
+#
+#   statement {
+#     resources = [
+#       "${aws_s3_bucket.lincset_bucket.arn}",
+#       "${aws_s3_bucket.lincset_bucket.arn}/*",
+#     ]
+#
+#     actions = ["s3:*"]
+#
+#     condition {
+#       test     = "StringEquals"
+#       variable = "s3:x-amz-acl"
+#       values   = ["bucket-owner-full-control"]
+#     }
+#
+#     principals {
+#       type        = "AWS"
+#       identifiers = [var.heroku_user.arn]
+#     }
+#   }
+#
+#   dynamic "statement" {
+#     for_each = var.trailing_delete ? [1] : []
+#
+#     content {
+#       sid = "PreventDeletionOfObjectVersions"
+#
+#       resources = [
+#         "${aws_s3_bucket.lincset_bucket.arn}/*"
+#       ]
+#
+#       actions = [
+#         "s3:DeleteObjectVersion",
+#       ]
+#
+#       effect = "Deny"
+#
+#       principals {
+#         identifiers = ["*"]
+#         type        = "*"
+#       }
+#     }
+#   }
+# }
 
 
 # S3 lifecycle policy that permanently deletes objects with delete markers
