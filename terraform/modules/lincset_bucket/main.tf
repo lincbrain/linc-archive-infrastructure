@@ -10,7 +10,6 @@ resource "aws_s3_bucket" "lincset_bucket" {
   lifecycle {
     prevent_destroy = true
   }
-
 }
 
 resource "aws_s3_bucket_object_lock_configuration" "lincset_bucket" {
@@ -22,6 +21,7 @@ resource "aws_s3_bucket_object_lock_configuration" "lincset_bucket" {
     }
   }
 }
+
 
 resource "aws_s3_bucket_server_side_encryption_configuration" "lincset_bucket" {
   bucket = aws_s3_bucket.lincset_bucket.id
