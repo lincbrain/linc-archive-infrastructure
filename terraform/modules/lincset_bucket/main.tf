@@ -8,7 +8,7 @@ resource "aws_s3_bucket" "lincset_bucket" {
   bucket = var.bucket_name
 
   lifecycle {
-    prevent_destroy = false
+    prevent_destroy = true
   }
 
 }
