@@ -1,6 +1,6 @@
 module "sponsored_lincset_bucket" {
   source                                = "./modules/lincset_bucket"
-  bucket_name                           = "linc-brain-mit"
+  bucket_name                           = "linc-brain-mit-prod"
   public                                = true
   versioning                            = true
   trailing_delete                       = false
@@ -15,7 +15,7 @@ module "sponsored_lincset_bucket" {
 
 module "sponsored_embargo_bucket" {
   source          = "./modules/lincset_bucket"
-  bucket_name     = "linc-brain-mit-embargo"
+  bucket_name     = "linc-brain-mit-embargo-prod"
   versioning      = false
   trailing_delete = false
   heroku_user     = data.aws_iam_user.api

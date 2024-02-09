@@ -71,14 +71,14 @@ resource "aws_s3_bucket_ownership_controls" "lincset_bucket" {
   }
 }
 
-# resource "aws_s3_bucket_acl" "lincset_bucket" {
-#   depends_on = [aws_s3_bucket_ownership_controls.lincset_bucket]
-#
-#   bucket = aws_s3_bucket.lincset_bucket.id
-#
-#   // Public access is granted via a bucket policy, not a canned ACL
-#   acl = "private"
-# }
+resource "aws_s3_bucket_acl" "lincset_bucket" {
+  depends_on = [aws_s3_bucket_ownership_controls.lincset_bucket]
+
+  bucket = aws_s3_bucket.lincset_bucket.id
+
+  // Public access is granted via a bucket policy, not a canned ACL
+  acl = "private"
+}
 
 resource "aws_iam_user_policy" "lincset_bucket_owner" {
   // The Heroku IAM user will always be in the project account
