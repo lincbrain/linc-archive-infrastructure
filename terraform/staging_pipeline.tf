@@ -20,7 +20,7 @@ module "api_staging" {
   heroku_worker_dyno_quantity = 1
 
   django_default_from_email          = "admin@staging-api.lincbrain.org"
-  django_cors_origin_whitelist       = ["https://gui-staging.lincbrain.org", "https://staging--gui-staging-lincbrain-org.netlify.app"]
+  django_cors_origin_whitelist       = ["https://gui-staging.lincbrain.org", "https://staging--lincbrain-org.netlify.app"]
   django_cors_origin_regex_whitelist = ["https://staging--gui-staging-lincbrain-org.netlify.app"]
 
   additional_django_vars = {
@@ -38,7 +38,7 @@ module "api_staging" {
     DJANGO_SENTRY_DSN                              = "https://833c159dc622528b21b4ce4adef6dbf8@o4506237212033024.ingest.sentry.io/4506237213212672"
     DJANGO_SENTRY_ENVIRONMENT                      = "staging"
     DJANGO_CELERY_WORKER_CONCURRENCY               = "2"
-    DJANGO_DANDI_WEB_APP_URL                       = "https://staging--gui-staging-lincbrain-org.netlify.app/"
+    DJANGO_DANDI_WEB_APP_URL                       = "https://staging--lincbrain-org.netlify.app/"
     DJANGO_DANDI_API_URL                           = "https://staging-api.lincbrain.org"
     DJANGO_DANDI_JUPYTERHUB_URL                    = "https://hub.lincbrain.org/"
   }
