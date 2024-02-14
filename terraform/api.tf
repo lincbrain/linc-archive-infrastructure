@@ -11,8 +11,8 @@ module "api" {
   route53_zone_id  = aws_route53_zone.linc-brain-mit.zone_id
   subdomain_name   = "api"
 
-  heroku_web_dyno_size    = "standard-1x"
-  heroku_worker_dyno_size = "standard-1x"
+  heroku_web_dyno_size    = "standard-2x"
+  heroku_worker_dyno_size = "standard-2x"
   heroku_postgresql_plan  = "standard-0"
   heroku_cloudamqp_plan   = "squirrel-1"
   heroku_papertrail_plan  = "liatorp"
@@ -20,7 +20,7 @@ module "api" {
   heroku_web_dyno_quantity    = 1
   heroku_worker_dyno_quantity = 1
 
-    django_default_from_email          = "admin@lincbrain.org"
+    django_default_from_email          = "admin@api.lincbrain.org"
     django_cors_origin_whitelist       = ["https://lincbrain.org"]
     django_cors_origin_regex_whitelist = ["^https:\\/\\/[0-9a-z\\-]+\\.netlify\\.app$"]
 
@@ -51,7 +51,7 @@ module "api" {
 resource "heroku_formation" "api_checksum_worker" {
   app_id   = module.api.heroku_app_id
   type     = "checksum-worker"
-  size     = "standard-1x"
+  size     = "standard-2x"
   quantity = 1
 }
 

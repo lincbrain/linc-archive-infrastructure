@@ -1,7 +1,7 @@
 module "sponsored_lincset_bucket" {
   source                                = "./modules/lincset_bucket"
   bucket_name                           = "linc-brain-mit-prod"
-  public                                = true
+  public                                = false
   versioning                            = true
   trailing_delete                       = false
   allow_cross_account_heroku_put_object = true

@@ -1,7 +1,7 @@
 module "staging_lincset_bucket" {
   source                  = "./modules/lincset_bucket"
   bucket_name             = "linc-brain-mit-staging"
-  public                  = true
+  public                  = false
   versioning              = true
   trailing_delete         = true
   allow_heroku_put_object = true
