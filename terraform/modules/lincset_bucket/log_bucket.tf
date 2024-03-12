@@ -100,7 +100,7 @@ resource "aws_iam_user_policy" "lincset_log_bucket_owner" {
 # data "aws_canonical_user_id" "log_bucket_owner_account" {}
 
 resource "aws_s3_bucket" "log_bucket_us_east_2" {
-  bucket = aws_s3_bucket.log_bucket_us_east_2.id
+  bucket = var.log_bucket_name
 
   lifecycle {
     prevent_destroy = true
