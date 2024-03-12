@@ -26,7 +26,7 @@ module "staging_embargo_bucket" {
   }
 }
 
-module "staging_lincset_bucket-us-east-2" {
+module "staging_lincset_bucket_us_east_2" {
   source                  = "./modules/lincset_bucket"
   bucket_name             = "linc-brain-mit-staging-us-east-2"
   public                  = false
