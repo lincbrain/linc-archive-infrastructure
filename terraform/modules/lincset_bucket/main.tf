@@ -584,3 +584,4 @@ resource "aws_s3_bucket_lifecycle_configuration" "expire_deleted_objects_us_east
     status = "Enabled"
   }
 }
+
