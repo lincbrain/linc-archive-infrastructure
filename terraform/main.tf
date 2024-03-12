@@ -17,6 +17,16 @@ provider "aws" {
    }
 }
 
+provider "aws" {
+  region = "us-east-2"
+  alias  = "target"
+  allowed_account_ids = ["151312473579"]
+
+  assume_role {
+      role_arn = "arn:aws:iam::151312473579:role/linc-infrastructure"
+  }
+}
+
 // The "sponsored" account, the Amazon-sponsored account with the public bucket
 provider "aws" {
   alias               = "sponsored"

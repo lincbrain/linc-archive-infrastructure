@@ -26,12 +26,12 @@ module "api" {
 
     additional_django_vars = {
         DJANGO_CONFIGURATION                           = "HerokuProductionConfiguration"
-        DJANGO_DANDI_DANDISETS_BUCKET_NAME             = module.sponsored_lincset_bucket.bucket_name
+        DJANGO_DANDI_DANDISETS_BUCKET_NAME             = module.sponsored_lincset_bucket-us-east-2.bucket_name
         DJANGO_DANDI_DANDISETS_BUCKET_PREFIX           = ""
-        DJANGO_DANDI_DANDISETS_EMBARGO_BUCKET_NAME     = module.sponsored_embargo_bucket.bucket_name
+        DJANGO_DANDI_DANDISETS_EMBARGO_BUCKET_NAME     = module.sponsored_embargo_bucket-us-east-2.bucket_name
         DJANGO_DANDI_DANDISETS_EMBARGO_BUCKET_PREFIX   = ""
-        DJANGO_DANDI_DANDISETS_LOG_BUCKET_NAME         = module.sponsored_lincset_bucket.log_bucket_name
-        DJANGO_DANDI_DANDISETS_EMBARGO_LOG_BUCKET_NAME = module.sponsored_embargo_bucket.log_bucket_name
+        DJANGO_DANDI_DANDISETS_LOG_BUCKET_NAME         = module.sponsored_lincset_bucket-us-east-2.log_bucket_name
+        DJANGO_DANDI_DANDISETS_EMBARGO_LOG_BUCKET_NAME = module.sponsored_embargo_bucket-us-east-2.log_bucket_name
         DJANGO_DANDI_DOI_API_URL                       = "https://api.datacite.org/dois"
         DJANGO_DANDI_DOI_API_USER                      = "temp.dandi"
         DJANGO_DANDI_DOI_API_PREFIX                    = "temp"
