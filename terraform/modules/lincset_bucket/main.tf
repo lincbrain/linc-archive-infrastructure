@@ -365,8 +365,8 @@ resource "aws_s3_bucket_ownership_controls" "lincset_bucket_us_east_2" {
   }
 }
 
-resource "aws_s3_bucket_acl" "lincset_bucket" {
-  depends_on = [aws_s3_bucket_ownership_controls.lincset_bucket]
+resource "aws_s3_bucket_acl" "lincset_bucket_us_east_2" {
+  depends_on = [aws_s3_bucket_ownership_controls.lincset_bucket_us_east_2]
 
   bucket = aws_s3_bucket.lincset_bucket_us_east_2.id
 
