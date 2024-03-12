@@ -41,7 +41,7 @@ module "sponsored_lincset_bucket_us_east_2" {
   }
 }
 
-module "sponsored_embargo_bucket-us-east-2" {
+module "sponsored_embargo_bucket_us_east_2" {
   source          = "./modules/lincset_bucket"
   bucket_name     = "linc-brain-mit-embargo-prod-us-east-2"
   versioning      = false
