@@ -318,7 +318,7 @@ resource "aws_s3_bucket_server_side_encryption_configuration" "lincset_bucket_us
 }
 
 resource "aws_s3_bucket_cors_configuration" "lincset_bucket_us_east_2" {
-  bucket = aws_s3_bucket.lincset_bucket.id
+  bucket = aws_s3_bucket.lincset_bucket_us_east_2.id
 
   cors_rule {
     allowed_origins = [
@@ -341,7 +341,7 @@ resource "aws_s3_bucket_cors_configuration" "lincset_bucket_us_east_2" {
 }
 
 resource "aws_s3_bucket_logging" "lincset_bucket_us_east_2" {
-  bucket = aws_s3_bucket.lincset_bucket.id
+  bucket = aws_s3_bucket.lincset_bucket_us_east_2.id
 
   target_bucket = aws_s3_bucket.log_bucket.id
   target_prefix = ""
@@ -350,7 +350,7 @@ resource "aws_s3_bucket_logging" "lincset_bucket_us_east_2" {
 resource "aws_s3_bucket_versioning" "lincset_bucket_us_east_2" {
   count = var.versioning ? 1 : 0
 
-  bucket = aws_s3_bucket.lincset_bucket.id
+  bucket = aws_s3_bucket.lincset_bucket_us_east_2.id
 
   versioning_configuration {
     status = "Enabled"
