@@ -24,6 +24,10 @@ module "api_staging" {
   django_cors_origin_regex_whitelist = ["https://staging--gui-staging-lincbrain-org.netlify.app"]
 
   additional_django_vars = {
+    CLOUDFRONT_BASE_URL                            = "lincbrain.org"
+    CLOUDFRONT_NEUROGLANCER_URL                    = "https://neuroglancer-staging.lincbrain.org"
+    CLOUDFRONT_PEM_KEY_ID                          = "KZQ92MU8PCLJ8"
+    CLOUDFRONT_PRIVATE_PEM_S3_LOCATION             = "cloudfront/private_key_staging_new.pem"
     DJANGO_CONFIGURATION                           = "HerokuStagingConfiguration"
     DJANGO_DANDI_DANDISETS_BUCKET_NAME             = module.staging_lincset_bucket_us_east_2.bucket_name
     DJANGO_DANDI_DANDISETS_BUCKET_PREFIX           = ""
@@ -41,6 +45,9 @@ module "api_staging" {
     DJANGO_DANDI_WEB_APP_URL                       = "https://staging--lincbrain-org.netlify.app"
     DJANGO_DANDI_API_URL                           = "https://staging-api.lincbrain.org"
     DJANGO_DANDI_JUPYTERHUB_URL                    = "https://hub.lincbrain.org/"
+    WEBKNOSSOS_API_URL                             = "https://webknossos-staging.lincbrain.org"
+    WEBKNOSSOS_ORGANIZATION_DISPLAY_NAME           = "LINC Staging"
+    WEBKNOSSOS_ORGANIZATION_NAME                   = "LINC_Staging"
   }
   additional_sensitive_django_vars = {
     DJANGO_DANDI_DOI_API_PASSWORD = "temp"

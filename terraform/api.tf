@@ -25,6 +25,10 @@ module "api" {
     django_cors_origin_regex_whitelist = ["^https:\\/\\/[0-9a-z\\-]+\\.netlify\\.app$"]
 
     additional_django_vars = {
+        CLOUDFRONT_BASE_URL                            = "lincbrain.org"
+        CLOUDFRONT_NEUROGLANCER_URL                    = "https://neuroglancer.lincbrain.org"
+        CLOUDFRONT_PEM_KEY_ID                          = "K3OG4MF62CGEDN"
+        CLOUDFRONT_PRIVATE_PEM_S3_LOCATION             = "cloudfront/private_key_prod_new.pem"
         DJANGO_CONFIGURATION                           = "HerokuProductionConfiguration"
         DJANGO_DANDI_DANDISETS_BUCKET_NAME             = module.sponsored_lincset_bucket_us_east_2.bucket_name
         DJANGO_DANDI_DANDISETS_BUCKET_PREFIX           = ""
@@ -42,6 +46,9 @@ module "api" {
         DJANGO_DANDI_WEB_APP_URL                       = "https://lincbrain.org"
         DJANGO_DANDI_API_URL                           = "https://api.lincbrain.org"
         DJANGO_DANDI_JUPYTERHUB_URL                    = "https://hub.lincbrain.org"
+        WEBKNOSSOS_API_URL                             = "https://webknossos.lincbrain.org"
+        WEBKNOSSOS_ORGANIZATION_DISPLAY_NAME           = "LINC"
+        WEBKNOSSOS_ORGANIZATION_NAME                   = "LINC"
       }
       additional_sensitive_django_vars = {
         DJANGO_DANDI_DOI_API_PASSWORD = "temp"
