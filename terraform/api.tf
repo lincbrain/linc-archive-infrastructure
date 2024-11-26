@@ -3,8 +3,8 @@ data "heroku_team" "linc-brain-mit" {
 }
 
 module "api" {
-  source  = "girder/girder4/heroku"
-  version = "0.13.0"
+  source  = "kitware-resonant/resonant/heroku"
+  version = "1.1.1"
 
   project_slug     = "linc-brain-prod"
   heroku_team_name = data.heroku_team.linc-brain-mit.name
