@@ -72,3 +72,11 @@ resource "aws_route53_record" "email-spf" {
   ttl     = "300"
   records = ["v=spf1 include:spf.improvmx.com ~all"]
 }
+
+resource "aws_route53_record" "docs" {
+  zone_id = aws_route53_zone.linc-brain-mit.zone_id
+  name    = "docs"
+  type    = "CNAME"
+  ttl     = "300"
+  records = ["lincbrain.github.io."]
+}
