@@ -80,3 +80,11 @@ resource "aws_route53_record" "docs" {
   ttl     = "300"
   records = ["lincbrain.github.io."]
 }
+
+resource "aws_route53_record" "dashboard" {
+  zone_id = aws_route53_zone.linc-brain-mit.zone_id
+  name    = "dashboard"
+  type    = "CNAME"
+  ttl     = "300"
+  records = ["lincbrain.github.io."]
+}
