@@ -44,7 +44,7 @@ module "api_staging" {
     DJANGO_CELERY_WORKER_CONCURRENCY               = "2"
     DJANGO_DANDI_WEB_APP_URL                       = "https://staging--lincbrain-org.netlify.app"
     DJANGO_DANDI_API_URL                           = "https://staging-api.lincbrain.org"
-    DJANGO_DANDI_JUPYTERHUB_URL                    = "https://hub.lincbrain.org/"
+    DJANGO_DANDI_JUPYTERHUB_URL                    = "https://hub.dandiarchive.org/"
     WEBKNOSSOS_API_URL                             = "https://webknossos-staging.lincbrain.org"
     WEBKNOSSOS_ORGANIZATION_DISPLAY_NAME           = "LINC Staging"
     WEBKNOSSOS_ORGANIZATION_NAME                   = "LINC_Staging"
