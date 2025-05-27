@@ -45,7 +45,7 @@ module "api" {
         DJANGO_CELERY_WORKER_CONCURRENCY               = "4"
         DJANGO_DANDI_WEB_APP_URL                       = "https://lincbrain.org"
         DJANGO_DANDI_API_URL                           = "https://api.lincbrain.org"
-        DJANGO_DANDI_JUPYTERHUB_URL                    = "https://hub.lincbrain.org"
+        DJANGO_DANDI_JUPYTERHUB_URL                    = "https://hub.dandiarchive.org"
         WEBKNOSSOS_API_URL                             = "https://webknossos.lincbrain.org"
         WEBKNOSSOS_ORGANIZATION_DISPLAY_NAME           = "LINC"
         WEBKNOSSOS_ORGANIZATION_NAME                   = "LINC"
