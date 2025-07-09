@@ -24,6 +24,8 @@ module "api_staging" {
   django_cors_origin_regex_whitelist = ["https://staging--gui-staging-lincbrain-org.netlify.app"]
 
   additional_django_vars = {
+    DANDI_INSTANCE_NAME                            = "LINC-STAGING"
+    DANDI_DOI_PREFIX                               = "10.80507"
     CLOUDFRONT_BASE_URL                            = "lincbrain.org"
     CLOUDFRONT_NEUROGLANCER_URL                    = "https://neuroglancer-staging.lincbrain.org"
     CLOUDFRONT_PEM_KEY_ID                          = "KZQ92MU8PCLJ8"

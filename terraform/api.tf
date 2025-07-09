@@ -25,6 +25,7 @@ module "api" {
     django_cors_origin_regex_whitelist = ["^https:\\/\\/[0-9a-z\\-]+\\.netlify\\.app$"]
 
     additional_django_vars = {
+        DANDI_INSTANCE_NAME                            = "LINC"
         CLOUDFRONT_BASE_URL                            = "lincbrain.org"
         CLOUDFRONT_NEUROGLANCER_URL                    = "https://neuroglancer.lincbrain.org"
         CLOUDFRONT_PEM_KEY_ID                          = "K3OG4MF62CGEDN"
