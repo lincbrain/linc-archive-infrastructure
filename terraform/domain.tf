@@ -96,3 +96,11 @@ resource "aws_route53_record" "status" {
   ttl     = "300"
   records = ["lincbrain.github.io."]
 }
+
+resource "aws_route53_record" "opticstream" {
+  zone_id = aws_route53_zone.linc-brain-mit.zone_id
+  name    = "opticstream"
+  type    = "CNAME"
+  ttl     = "300"
+  records = ["lincbrain.github.io."]
+}
