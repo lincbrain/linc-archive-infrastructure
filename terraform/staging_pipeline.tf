@@ -35,13 +35,10 @@ module "api_staging" {
     DJANGO_DANDI_DANDISETS_EMBARGO_BUCKET_PREFIX   = ""
     DJANGO_DANDI_DANDISETS_LOG_BUCKET_NAME         = module.staging_lincset_bucket_us_east_2.log_bucket_name
     DJANGO_DANDI_DANDISETS_EMBARGO_LOG_BUCKET_NAME = module.staging_embargo_bucket_us_east_2.log_bucket_name
-    DJANGO_DANDI_DOI_API_URL                       = "https://api.test.datacite.org/dois"
-    DJANGO_DANDI_DOI_API_USER                      = "dartlib.dandi"
-    DJANGO_DANDI_DOI_API_PREFIX                    = "10.80507"
-    DJANGO_DANDI_DOI_PUBLISH                       = "false"
     DJANGO_SENTRY_DSN                              = "https://833c159dc622528b21b4ce4adef6dbf8@o4506237212033024.ingest.sentry.io/4506237213212672"
     DJANGO_SENTRY_ENVIRONMENT                      = "staging"
     DJANGO_CELERY_WORKER_CONCURRENCY               = "2"
+    DJANGO_DANDI_INSTANCE_NAME                     = "LINC-STAGING"
     DJANGO_DANDI_WEB_APP_URL                       = "https://staging--lincbrain-org.netlify.app"
     DJANGO_DANDI_API_URL                           = "https://staging-api.lincbrain.org"
     DJANGO_DANDI_JUPYTERHUB_URL                    = "https://hub.dandiarchive.org/"
@@ -50,7 +47,6 @@ module "api_staging" {
     WEBKNOSSOS_ORGANIZATION_NAME                   = "LINC_Staging"
   }
   additional_sensitive_django_vars = {
-    DJANGO_DANDI_DOI_API_PASSWORD = "temp"
   }
 }
 
